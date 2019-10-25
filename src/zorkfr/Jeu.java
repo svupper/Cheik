@@ -230,12 +230,14 @@ public class Jeu {
 	public void capture(){
 		if(pieceCourante.isPetHere()){
 			if(!(p.isFull())){
-				Chien recu=this.pieceCourante.pickUpPet();
+				Chien recu=this.pieceCourante.pickUpPet();//cette methode doit retirer 1 au compteur de chien dans la piece ( pas de ArrayList chien dans la piece)
+				String name;
 				//System.out.println("Il y a un chien ici !"); ecrire ca quand la personne change de piece dans la description longue(besoin que d'afficher le nombre en vraie, pas besoin de mmessage, si 0 chien bah zero chien)
 				System.out.println("Comment voullez vous l'appeler ?!");
-				recu.setName(analyseurSyntaxique.getName());
+				name=analyseurSyntaxique.getName();
+				recu.setName(name);
 				p.addPet(recu);
-				System.out.println("Capture Reussi !");
+				System.out.println("Capture Reussi !, votre nouveau compagnon s'appelle "+name);
 			}
 		}else{
 			System.out.println("Il n'y a pas d'animaux ici!");
@@ -249,7 +251,7 @@ public class Jeu {
 			p.removePet(relache);
 			System.out.println("Aurevoir !");
 		}else{
-			System.out.println("Aucun animal à relacher!");
+			System.out.println("Aucun animal à relacher !");
 		}
 	}
 	

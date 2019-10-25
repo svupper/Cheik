@@ -159,11 +159,9 @@ public class Piece {
 	
 	public Chien pickUpPet(){
 		//if 
-		Chien c=null;
+		Chien c=new Chien();
 		//write here method to take off a pet from the room
 		if(!(countPets<1)){
-			c=this.pets.get(pets.size());
-			this.pets.remove(pets.size());
 			countPets--;
 		}
 		return c;
@@ -217,6 +215,7 @@ public class Piece {
 	public Piece pieceSuivante(Direction d) {
 		return sorties.get(d);
 	}
+	
 	public boolean isObjHere() {
 		// TODO Auto-generated method stub
 		if(countObj!=0){return true;}else{
