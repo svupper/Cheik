@@ -209,7 +209,7 @@ public class Jeu {
 		Piece pieceSuivante = pieceCourante.pieceSuivante(d);//mettre a jour les pieces apres l'avoir quitté
 		//rassembler toutes les pieces dans une liste. mettre a jour la liste avec l'element pieceCourante
 		//La difference est qu'on possede l'indice de la piece actuelle est qu'on peut facilement la modifier
-		pieceSuivante=getFromMaze(pieceSuivante);//le probleme vient peut etre de la fonction pick( atester) ou bien je ne fais que passer des elements non modifié dans la liste Maze.
+		pieceSuivante=getFromMaze(pieceSuivante);//le probleme vient peut etre de la fonction pick( a tester) ou bien je ne fais que passer des elements non modifié dans la liste Maze.
 		if (pieceSuivante == null) {
 			System.out.println("Il n'y a pas de porte dans cette direction!");
 		} else {
@@ -272,10 +272,12 @@ public class Jeu {
 		if(!p.isFull()){
 			
 			System.out.println("Quel Item ramasser ?!"); //afficher ici les items par terre
-			pieceCourante.objDesc();
+			System.out.println(pieceCourante.objDesc());
 			name=analyseurSyntaxique.getName();
 			Objet retire=new Objet(name);
-			pieceCourante.pickUpItem(retire);
+			pieceCourante.pickUpItem(name);
+			System.out.println(pieceCourante.objDesc());
+			//afficher ici le contenu de la piece pour voir si le probleme vient de la methode ou du maze.
 			p.addObj(retire);//checker ici avant si l'objet existe bien avant de lajouter et le retirer
 			System.out.println("Vous avez ramassez l'objet "+name+" !");
 		}else{

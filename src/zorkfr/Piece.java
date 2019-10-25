@@ -3,6 +3,7 @@ import main.Chien;
 import main.Objet;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
@@ -182,15 +183,22 @@ public class Piece {
 	}
 	*/
 	
-	public Objet pickUpItem(Objet o){
-		
-		//write here method to take off a pet from the room
+	public Objet pickUpItem(String name){ //le probleme vient dici, cette methode ne fonctionne pas
+		Objet r = null;
+		//write here method to take off an object from the room
 		if(!(countObj<1)){
-			
-			this.obj.remove(o);
-			countObj--;
+			Iterator<Objet> iter=this.obj.iterator();
+			while(iter.hasNext()){
+				Objet o= iter.next();
+				if(o.getName().equalsIgnoreCase(name)){
+					r=o;
+					iter.remove();
+				}
+			}
+		}else{
+			System.out.println("il n'y pas d'objet ici");
 		}
-		return o;
+		return r;
 	}
 	
 	//public String create here a method to describe object in the room
