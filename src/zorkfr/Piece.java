@@ -153,7 +153,7 @@ public class Piece {
 	public String petsDesc(){
 		
 		String c="Chien present :";
-		c += " " + pets.size();
+		c += " " + countPets;
 		return c;
 	}
 	
