@@ -41,7 +41,7 @@ public class Jeu {
 	public Jeu() {
 		creerPieces();
 		analyseurSyntaxique = new AnalyseurSyntaxique();
-		p=new Player();
+		p=new Player(null,3,3);
 		
 	}
 
@@ -152,6 +152,9 @@ public class Jeu {
 			throwItem();
 		} else if (motCommande.equals("ramasser")) {
 			pickUpItem();
+		} else if (motCommande.equals("inventaire")) {	
+			afficherInventaire();
+			afficherAnimaux();
 		} else if (motCommande.equals("quitter")) {
 			if (commande.aSecondMot()) {
 				System.out.println("Quitter quoi ?");
@@ -175,7 +178,22 @@ public class Jeu {
 		System.out.println("Les commandes reconnues sont:");
 		analyseurSyntaxique.afficherToutesLesCommandes();
 	}
-
+	
+	public void afficherInventaire(){
+		if(!p.isBagEmpty()){
+			System.out.println(p.bagDesc());
+		}else{
+		System.out.println("Le sac est vide");
+		}
+	}
+	
+	public void afficherAnimaux(){
+		if(!p.noPet()){
+			System.out.println(p.petsDesc());
+		}else{
+		System.out.println("pas de compagnion");
+		}
+	}
 	
 	/**
 	 *  Tente d'aller dans la direction spécifiée par la commande. Si la piece
@@ -245,7 +263,7 @@ public class Jeu {
 	}
 	
 	public void freePet(){
-		if(p.havePet()){
+		if(!p.noPet()){
 			System.out.println("qui voullez vous relacher ?!");//afficher ici les animaux dispo
 			String relache=analyseurSyntaxique.getName();
 			p.removePet(relache);
@@ -270,18 +288,35 @@ public class Jeu {
 	
 	public void pickUpItem(){
 		String name;
+		Objet retire=null;
 		//choisir ici de ramasser n'importe quel objet plutot
 		if(!p.isFull()){
+			
+			if(!pieceCourante.isObjHere()){
+				System.out.println("Aucun item � ramasser ici");
+				return;
+			}
 			
 			System.out.println("Quel Item ramasser ?!"); //afficher ici les items par terre
 			System.out.println(pieceCourante.objDesc());
 			name=analyseurSyntaxique.getName();
-			Objet retire=new Objet(name);
-			pieceCourante.pickUpItem(name);
+			try{
+				retire=pieceCourante.pickUpItem(name);
+			}catch(Exception e){
+				System.out.println(e.getMessage());
+			}
+				
 			System.out.println(pieceCourante.objDesc());
 			//afficher ici le contenu de la piece pour voir si le probleme vient de la methode ou du maze.
-			p.addObj(retire);//checker ici avant si l'objet existe bien avant de lajouter et le retirer
-			System.out.println("Vous avez ramassez l'objet "+name+" !");
+			if(retire!=null){
+				if(p.addObj(retire)){
+					System.out.println("Vous avez ramassez l'objet "+name+" !");
+				}else{
+					System.out.println("Erreur lors de la tentative de ramassage");//checker ici avant si l'objet existe bien avant de lajouter et le retirer
+				}
+			}else{
+				System.out.println("Aucun Objet "+name+" sur le sol");
+			}
 		}else{
 			System.out.println("Votre inventaire est plein !");
 		}

@@ -1,15 +1,16 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Player extends Entity{
 	
-	private List<Objet> bag;
+	private ArrayList<Objet> bag=new ArrayList<Objet>();;
 	private int number_obj;
 	private int capacity;
 	
-	private List<Chien> pets;
+	private ArrayList<Chien> pets=new ArrayList<Chien>();;
 	private int maxCompagnie;
 	private int pet_count;
 		
@@ -21,12 +22,9 @@ public class Player extends Entity{
 	
 	public Player(String name,int maxBag,int maxPet){
 		super(name);
-		this.number_obj=maxBag;
-		this.pet_count=maxPet;
-		bag = new ArrayList<Objet>();
-		pets=new ArrayList<Chien>();
-		this.capacity=10;
-		this.maxCompagnie=5;
+
+		this.capacity=maxBag;
+		this.maxCompagnie=maxPet;
 		
 	}
 	
@@ -37,28 +35,60 @@ public class Player extends Entity{
 		}
 	}
 	
-	public void removePet(String relache){		
-		if(pet_count>0){
-			this.pets.remove(relache);
-			pet_count--;
+	public void removePet(String name){		
+
+		//write here method to take off an object from the room
+		if(!(pet_count<1)){
+			Iterator<Chien> iter=this.pets.iterator();
+			while(iter.hasNext()){
+				Chien c= iter.next();
+				if(c.getName().equalsIgnoreCase(name)){
+					
+					iter.remove();
+					pet_count--;
+				}
+			}
+		}else{
+			System.out.println("Aucun animal à relaché");
 		}
 	}
+	
+	
+	
+	
 	
 	//put here method for knowing if there is object in bag and if there is pet following
 	//try to implement a method to track pet move as ordered in the exercise
 	
-	public void addObj(Objet o){
+	public boolean addObj(Objet o){
 		if(number_obj<capacity){
 			this.bag.add(o);
+			number_obj++;
+			return true;
+		}else{
+			return false;
 		}
 	}
 	
-	public void removeObj(String name){
-		Objet o = new Objet(name);
-		if(number_obj>0){
-			this.bag.remove(o);
+	
+	public void removeObj(String name){//le probleme vient dici, cette methode ne fonctionne pas
+
+		//write here method to take off an object from the room
+		if(!(number_obj<1)){
+			Iterator<Objet> iter=this.bag.iterator();
+			while(iter.hasNext()){
+				Objet o= iter.next();
+				if(o.getName().equalsIgnoreCase(name)){
+					
+					iter.remove();
+					number_obj++;
+				}
+			}
+		}else{
+			System.out.println("Aucun objet à jeté");
 		}
 	}
+	
 		
 	
 	public void increasePower(int ammount){
@@ -69,9 +99,9 @@ public class Player extends Entity{
 		this.power=power-amount;
 	}
 
-	public boolean havePet() {
+	public boolean noPet() {
 		// TODO Auto-generated method stub
-		if (pet_count!=0){
+		if (pet_count==0){
 		return true;}
 		else{return false;}
 		
@@ -93,6 +123,33 @@ public class Player extends Entity{
 		}else{
 			return true;
 		}
+	}
+
+	public String bagDesc() {
+		// TODO Auto-generated method stub
+		String inv="Inventaire : ";
+
+		for (Objet o : bag ) {
+			inv += " " + o.getName();
+		}
+		
+		return inv;
+	}
+	
+	public boolean isBagEmpty() {
+		// TODO Auto-generated method stub
+		if(number_obj==0){return true;}
+		return false;
+	}
+
+	public String petsDesc(){
+		String pet="Compagnions attrapés : ";
+		
+		for (Chien c : pets ) {
+			pet += " " + c.getName();
+		}
+		
+		return pet;
 	}
 	
 }
