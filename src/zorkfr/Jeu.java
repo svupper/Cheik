@@ -20,18 +20,16 @@
  */
 package zorkfr;
 
-import java.util.ArrayList;
-
 import main.Chien;
 import main.Objet;
 import main.Player;
 
 public class Jeu {
 	private AnalyseurSyntaxique analyseurSyntaxique;
-	private ArrayList<Piece> maze=new ArrayList<Piece>();;
+
 	private Piece pieceCourante;
 	private Player p;
-	//private int indiceP;
+
 
 
 	/**
@@ -70,16 +68,9 @@ public class Jeu {
 		burreau.setSorties(null, null, null, batimentC);
 
 		
-		//assembler toutes les pieces dans le labyrinte
-		maze.add(dehors);
-		maze.add(salleTD);
-		maze.add(taverne);
-		maze.add(batimentC);
-		maze.add(burreau);
-		
 		// le jeu commence dehors
 		pieceCourante = dehors;
-		//indiceP = maze.indexOf(pieceCourante);
+
 		
 	}
 
@@ -118,11 +109,6 @@ public class Jeu {
 		System.out.println(pieceCourante.descriptionLongue());
 		System.out.println("Entrez votre nom : ");
 		System.out.print(">");
-	}
-
-	public void updateMaze(Piece pc){
-		int iP = maze.indexOf(pc);
-		maze.set(iP, pc);
 	}
 
 	/**
@@ -179,7 +165,7 @@ public class Jeu {
 	}
 	
 	public void afficherInventaire(){
-		if(!p.isBagEmpty()){
+		if(!(p.isBagEmpty())){
 			System.out.println(p.bagDesc());
 		}else{
 		System.out.println("Le sac est vide");
@@ -187,7 +173,7 @@ public class Jeu {
 	}
 	
 	public void afficherAnimaux(){
-		if(!p.noPet()){
+		if(!(p.noPet())){
 			System.out.println(p.petsDesc());
 		}else{
 		System.out.println("pas de compagnion");
@@ -224,33 +210,23 @@ public class Jeu {
 
 		// Tentative d'aller dans la direction indiquÃ©e.
 		Piece pieceSuivante = pieceCourante.pieceSuivante(d);//mettre a jour les pieces apres l'avoir quitté
-		//rassembler toutes les pieces dans une liste. mettre a jour la liste avec l'element pieceCourante
-		//La difference est qu'on possede l'indice de la piece actuelle est qu'on peut facilement la modifier
-		//pieceSuivante=getFromMaze(pieceSuivante);//le probleme vient peut etre de la fonction pick( a tester) ou bien je ne fais que passer des elements non modifié dans la liste Maze.
+
 		if (pieceSuivante == null) {
 			System.out.println("Il n'y a pas de porte dans cette direction!");
 		} else {
-			//mettre ici a jour le maze avant de detruire la pieceCourante
-			//updateMaze(pieceCourante);
+			//rajouter ici un message indiquant les chiens accompagnant le joueur et le deplacement qui se produit
 			pieceCourante = pieceSuivante;
 			System.out.println(pieceCourante.descriptionLongue());
+			
 		}
 	}
-	
-	private Piece getFromMaze(Piece p) {
-		// TODO Auto-generated method stub
-		System.out.println(maze.indexOf(p));
-		return maze.get(maze.indexOf(p)+1);
-	}
-
 
 	public void capture(){
 		if(pieceCourante.isPetHere()){
 			if(!(p.isMaxPets())){
 				Chien recu=this.pieceCourante.pickUpPet();//cette methode doit retirer 1 au compteur de chien dans la piece ( pas de ArrayList chien dans la piece)
 				String name;
-				//System.out.println("Il y a un chien ici !"); ecrire ca quand la personne change de piece dans la description longue(besoin que d'afficher le nombre en vraie, pas besoin de mmessage, si 0 chien bah zero chien)
-				System.out.println("Comment voullez vous l'appeler ?!");
+				
 				name=analyseurSyntaxique.getName();
 				recu.setName(name);
 				p.addPet(recu);
@@ -290,7 +266,7 @@ public class Jeu {
 	public void pickUpItem(){
 		String name;
 		Objet retire=null;
-		//choisir ici de ramasser n'importe quel objet plutot
+
 		if(!(p.isFull())){
 			
 			if(!pieceCourante.isObjHere()){
@@ -308,7 +284,7 @@ public class Jeu {
 			}
 				
 			System.out.println(pieceCourante.objDesc());
-			//afficher ici le contenu de la piece pour voir si le probleme vient de la methode ou du maze.
+			
 			if(retire!=null){
 				if(p.addObj(retire)){
 					System.out.println("Vous avez ramassez l'objet "+name+" !");

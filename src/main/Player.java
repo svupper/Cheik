@@ -25,6 +25,7 @@ public class Player extends Entity{
 
 		this.capacity=maxBag;
 		this.maxCompagnie=maxPet;
+
 		
 	}
 	
@@ -101,7 +102,7 @@ public class Player extends Entity{
 
 	public boolean noPet() {
 		// TODO Auto-generated method stub
-		if (pet_count==0){
+		if (pet_count<1){
 		return true;}
 		else{return false;}
 		
@@ -109,7 +110,7 @@ public class Player extends Entity{
 	
 	public boolean haveItem() {
 		// TODO Auto-generated method stub
-		if (number_obj!=0){
+		if (number_obj<1){
 		return true;}
 		else{return false;}
 		

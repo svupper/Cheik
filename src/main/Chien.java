@@ -3,7 +3,7 @@ package main;
 public class Chien extends Entity {
 
 	private boolean captured=false;
-	
+	//implementé ici un inventaire (copié collé de l'entité player ou herité de la classe entity qui possede un inventaire)
 	public Chien(String name){
 		super(name);
 	}

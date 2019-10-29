@@ -139,9 +139,14 @@ public class Piece {
 	 * @return String
 	 */
 	public String objDesc(){
-		String objs="Objets presents : ";
+		String objs;
+		if(this.isObjHere()){
+		objs="Objets presents : ";
 		for (Objet objet :  obj) {
 			objs += " " + objet.getName();
+		}
+		}else{
+			objs="Pas d'objets ici";
 		}
 		return objs;
 	}
@@ -151,9 +156,14 @@ public class Piece {
 	 * @return String
 	 */
 	public String petsDesc(){
-		
-		String c="Chien present :";
-		c += " " + countPets;
+		String c;
+		if(this.isPetHere()){
+			c="Chien present :";
+			c += " " + countPets;
+			
+		}else{
+			c="Pas de chien ici";
+		}
 		return c;
 	}
 	
