@@ -177,19 +177,6 @@ public class Piece {
 		return c;
 	}
 	
-	/*
-	public Objet pickUpItem(){
-		//if 
-		Objet o=null;
-		//write here method to take off a pet from the room
-		if(!(countObj<1)){
-			o=this.obj.get(obj.size());
-			this.obj.remove(obj.size());
-			countObj--;
-		}
-		return o;
-	}
-	*/
 	
 	public Objet pickUpItem(String name){ //le probleme vient dici, cette methode ne fonctionne pas
 		Objet r = null;

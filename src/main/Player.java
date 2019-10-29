@@ -161,4 +161,7 @@ public class Player extends Entity{
 		return pet;
 	}
 	
+	public ArrayList<Chien> petsList(){ 
+		return pets;
+	}
 }

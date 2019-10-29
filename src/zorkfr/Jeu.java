@@ -92,7 +92,11 @@ public class Jeu {
 		while (!termine) {
 			Commande commande = analyseurSyntaxique.getCommande();
 			termine = traiterCommande(commande);
+			if(p.isFull()&&(p.isMaxPets())){
+				termine=true;
+			}
 		}
+		System.out.println("Vous avez ramasser suffisament d'objet et de chien pour sortir");
 		System.out.println("Merci d'avoir jouer.  Au revoir.");
 	}
 
@@ -214,23 +218,31 @@ public class Jeu {
 		if (pieceSuivante == null) {
 			System.out.println("Il n'y a pas de porte dans cette direction!");
 		} else {
-			//rajouter ici un message indiquant les chiens accompagnant le joueur et le deplacement qui se produit
+			if(!(p.noPet())){
+				petMovement(pieceCourante, pieceSuivante);//rajouter ici un message indiquant les chiens accompagnant le joueur et le deplacement qui se produit
+			}
 			pieceCourante = pieceSuivante;
 			System.out.println(pieceCourante.descriptionLongue());
 			
 		}
 	}
 
+	public void petMovement(Piece A, Piece B){
+		for(Chien c : p.petsList()){
+		System.out.println("Votre Compagnon "+c.getName()+" se deplace depuis "+A.descriptionCourte()+" vers "+B.descriptionCourte());
+		}
+	}
+	
 	public void capture(){
 		if(pieceCourante.isPetHere()){
 			if(!(p.isMaxPets())){
 				Chien recu=this.pieceCourante.pickUpPet();//cette methode doit retirer 1 au compteur de chien dans la piece ( pas de ArrayList chien dans la piece)
 				String name;
-				
+				System.out.println("Capture Reussi ! Comment voullez vous l'appellez ?");
 				name=analyseurSyntaxique.getName();
 				recu.setName(name);
 				p.addPet(recu);
-				System.out.println("Capture Reussi !, votre nouveau compagnon s'appelle "+name);
+				System.out.println("Votre nouveau compagnon s'appelle "+name);
 			}else{
 				System.out.println("plus de place pour de nouveaux compagnions");
 			}
