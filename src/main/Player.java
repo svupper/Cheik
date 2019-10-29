@@ -5,10 +5,10 @@ import java.util.Iterator;
 
 
 public class Player extends Entity{
-	
+	/*
 	private ArrayList<Objet> bag=new ArrayList<Objet>();;
 	private int number_obj;
-	private int capacity;
+	private int capacity;*/
 	
 	private ArrayList<Chien> pets=new ArrayList<Chien>();;
 	private int maxCompagnie;
@@ -17,11 +17,11 @@ public class Player extends Entity{
 	public Player(){}
 	
 	public Player(String name){
-		super(name);
+		super(name,5);
 		}
 	
 	public Player(String name,int maxBag,int maxPet){
-		super(name);
+		super(name,5);
 
 		this.capacity=maxBag;
 		this.maxCompagnie=maxPet;
@@ -61,6 +61,7 @@ public class Player extends Entity{
 	//put here method for knowing if there is object in bag and if there is pet following
 	//try to implement a method to track pet move as ordered in the exercise
 	
+	/*
 	public boolean addObj(Objet o){
 		if(number_obj<capacity){
 			this.bag.add(o);
@@ -69,9 +70,9 @@ public class Player extends Entity{
 		}else{
 			return false;
 		}
-	}
+	}*/
 	
-	
+	/*
 	public void removeObj(String name){//le probleme vient dici, cette methode ne fonctionne pas
 
 		//write here method to take off an object from the room
@@ -89,6 +90,7 @@ public class Player extends Entity{
 			System.out.println("Aucun objet à jeté");
 		}
 	}
+	*/
 	
 		
 	
@@ -108,6 +110,7 @@ public class Player extends Entity{
 		
 	}
 	
+	/*
 	public boolean haveItem() {
 		// TODO Auto-generated method stub
 		if (number_obj<1){
@@ -115,8 +118,9 @@ public class Player extends Entity{
 		else{return false;}
 		
 	}
+	*/
 
-
+	/*
 	public boolean isFull() {//fix that, why cant get the info
 		// TODO Auto-generated method stub
 		if (number_obj>=capacity){
@@ -125,6 +129,7 @@ public class Player extends Entity{
 			return false;
 		}
 	}
+	*/
 	
 	public boolean isMaxPets(){
 		if (pet_count>=maxCompagnie){
@@ -134,6 +139,7 @@ public class Player extends Entity{
 		}
 	}
 
+	/*
 	public String bagDesc() {
 		// TODO Auto-generated method stub
 		String inv="Inventaire : ";
@@ -150,6 +156,7 @@ public class Player extends Entity{
 		if(number_obj==0){return true;}
 		return false;
 	}
+	*/
 
 	public String petsDesc(){
 		String pet="Compagnions attrapés : ";

@@ -115,9 +115,13 @@ public class AnalyseurSyntaxique {
 		// le cas l'objet renvoyé l'indique
 		if (commandes.estCommande(mot1)) {
 			return new Commande(mot1, mot2);
-		} else {
+		} else if(commandes.estCommandeSpec(mot1)){
+			return new Commande(mot1,null);
+		}else{
 			return new Commande(null, mot2);
 		}
+		
+		
 	}
 
 

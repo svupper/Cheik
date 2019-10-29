@@ -20,6 +20,8 @@
  */
 package zorkfr;
 
+import java.util.Iterator;
+
 import main.Chien;
 import main.Objet;
 import main.Player;
@@ -38,7 +40,7 @@ public class Jeu {
 	public Jeu() {
 		creerPieces();
 		analyseurSyntaxique = new AnalyseurSyntaxique();
-		p=new Player(null,1,1);
+		p=new Player(null,3,3);
 		
 	}
 
@@ -141,6 +143,8 @@ public class Jeu {
 			throwItem();
 		} else if (motCommande.equals("ramasser")) {
 			pickUpItem();
+		} else if (motCommande.equals("echanger")) {		
+			 exchangeItem();
 		} else if (motCommande.equals("inventaire")) {	
 			afficherInventaire();
 			afficherAnimaux();
@@ -152,6 +156,30 @@ public class Jeu {
 			}
 		}
 		return false;
+	}
+	
+	public int traiterCommandeSpec(Commande c){
+		if(c!=null){
+			if (!(c.isSpecial())) {
+				System.out.println("Commande Invalide lorsque l'inventaire du compagon est ouvert");
+				return -1;
+			}
+			String motCommande = c.getMotCommande();
+			System.out.println(motCommande);
+			if(motCommande!=null){
+				if(motCommande.equalsIgnoreCase("donner")){
+					return 0;
+					
+				}else if (motCommande.equalsIgnoreCase("prendre")) {
+					return 1;
+					
+				}else if(motCommande.equalsIgnoreCase("fermer")) {
+					return -1;
+					
+				}
+			}
+		}
+		return -1;
 	}
 
 
@@ -274,6 +302,72 @@ public class Jeu {
 			System.out.println("Vous ne possedez aucun objet !");
 		}
 	}
+	
+	public void exchangeItem(){//il faut une commande pour ouvrir l'inventaire d'un chien
+		//et pouvoir utiliser 2 commandes (donner prendre)
+		System.out.println("Avec quel compagnon voulez vous echanger ?");
+		String name = analyseurSyntaxique.getName();
+		Iterator<Chien> iter=p.petsList().iterator();
+		int command;
+		Chien c=null;
+		while(iter.hasNext()){
+			c= iter.next();
+			if(c.getName().equalsIgnoreCase(name)){
+				System.out.println("Inventaire du compagnon "+c.getName()+" ouvert : ");
+				System.out.println(c.bagDesc());
+				c.openInv();
+				break;
+			}
+		}
+		while(c.invIsOpen()&&(c!=null)){
+		//utiliser ici des commandes speciale et une boucle
+			Commande commande = analyseurSyntaxique.getCommande();
+			commande.setSpecial();
+			command=traiterCommandeSpec(commande);
+			if(command==1){
+				System.out.println("on va prendre");
+				if((!(c.isBagEmpty()))&&(!(p.isFull()))){
+					System.out.println(c.bagDesc());
+					System.out.println("Quel item prendre ?");
+					String pre = analyseurSyntaxique.getName();
+					Objet o=c.removeObj(pre);
+					if(o==null){
+						System.out.println("Aucun item possedant ce nom dans l'inventaire de "+c.getName());
+						return;
+					}
+					p.addObj(o);
+					System.out.println(o.getName()+" recuperé");
+				}
+			}else if(command==0){
+				System.out.println("on va donner");
+				System.out.println(p.isBagEmpty());
+				System.out.println(c.isFull());
+				if(!(p.isBagEmpty())){
+					if(!(c.isFull())){
+						System.out.println(p.bagDesc());
+						System.out.println("Quel item donné ?");
+						String pre = analyseurSyntaxique.getName();
+						Objet o=p.removeObj(pre);
+						c.addObj(o);
+						System.out.println(o.getName()+" donné à "+c.getName());
+					}else{
+						System.out.println("Le compagnon ne peut plus porter d'objet supplementaire");
+					}
+				}else{
+					System.out.println("Aucun Item dans l'inventaire");
+				}
+			}else if(command==-1){
+				c.closeInv();
+				System.out.println("Inventaire fermé pour "+c.getName());
+			}
+					
+		}
+
+			
+	}
+		
+		
+	
 	
 	public void pickUpItem(){
 		String name;

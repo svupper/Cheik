@@ -35,7 +35,7 @@ package zorkfr;
 public class Commande {
 	private String motCommande;
 	private String secondMot;
-
+	private boolean spec=false;
 
 	/**
 	 *  Initialise une Commande a partir des deux mots spécifiés. <p>
@@ -64,6 +64,13 @@ public class Commande {
 		return motCommande;
 	}
 
+	public void setSpecial(){
+		spec=true;
+	}
+	
+	public boolean isSpecial(){
+		return spec;
+	}
 
 	/**
 	 *  Renvoie le second mot de cette Commande ou null si cette commande ne
@@ -94,5 +101,14 @@ public class Commande {
 	public boolean aSecondMot() {
 		return (secondMot != null);
 	}
+
+
+	public boolean estSpecial() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+
 }
 

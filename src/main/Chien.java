@@ -5,10 +5,13 @@ public class Chien extends Entity {
 	private boolean captured=false;
 	//implementé ici un inventaire (copié collé de l'entité player ou herité de la classe entity qui possede un inventaire)
 	public Chien(String name){
-		super(name);
+		super(name,5);
+		
 	}
 	
-	public Chien(){}
+	public Chien(){
+		super(null,5);
+	}
 	
 	public boolean isCaptured(){
 		return captured;
