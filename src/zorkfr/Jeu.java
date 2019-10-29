@@ -21,7 +21,6 @@
 package zorkfr;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import main.Chien;
 import main.Objet;
@@ -32,7 +31,7 @@ public class Jeu {
 	private ArrayList<Piece> maze=new ArrayList<Piece>();;
 	private Piece pieceCourante;
 	private Player p;
-	private int indiceP;
+	//private int indiceP;
 
 
 	/**
@@ -41,7 +40,7 @@ public class Jeu {
 	public Jeu() {
 		creerPieces();
 		analyseurSyntaxique = new AnalyseurSyntaxique();
-		p=new Player(null,3,3);
+		p=new Player(null,1,1);
 		
 	}
 
@@ -80,7 +79,7 @@ public class Jeu {
 		
 		// le jeu commence dehors
 		pieceCourante = dehors;
-		indiceP = maze.indexOf(pieceCourante);
+		//indiceP = maze.indexOf(pieceCourante);
 		
 	}
 
@@ -227,12 +226,12 @@ public class Jeu {
 		Piece pieceSuivante = pieceCourante.pieceSuivante(d);//mettre a jour les pieces apres l'avoir quitté
 		//rassembler toutes les pieces dans une liste. mettre a jour la liste avec l'element pieceCourante
 		//La difference est qu'on possede l'indice de la piece actuelle est qu'on peut facilement la modifier
-		pieceSuivante=getFromMaze(pieceSuivante);//le probleme vient peut etre de la fonction pick( a tester) ou bien je ne fais que passer des elements non modifié dans la liste Maze.
+		//pieceSuivante=getFromMaze(pieceSuivante);//le probleme vient peut etre de la fonction pick( a tester) ou bien je ne fais que passer des elements non modifié dans la liste Maze.
 		if (pieceSuivante == null) {
 			System.out.println("Il n'y a pas de porte dans cette direction!");
 		} else {
 			//mettre ici a jour le maze avant de detruire la pieceCourante
-			updateMaze(pieceCourante);
+			//updateMaze(pieceCourante);
 			pieceCourante = pieceSuivante;
 			System.out.println(pieceCourante.descriptionLongue());
 		}
@@ -240,14 +239,14 @@ public class Jeu {
 	
 	private Piece getFromMaze(Piece p) {
 		// TODO Auto-generated method stub
-		
-		return maze.get(maze.indexOf(p));
+		System.out.println(maze.indexOf(p));
+		return maze.get(maze.indexOf(p)+1);
 	}
 
 
 	public void capture(){
 		if(pieceCourante.isPetHere()){
-			if(!(p.isFull())){
+			if(!(p.isMaxPets())){
 				Chien recu=this.pieceCourante.pickUpPet();//cette methode doit retirer 1 au compteur de chien dans la piece ( pas de ArrayList chien dans la piece)
 				String name;
 				//System.out.println("Il y a un chien ici !"); ecrire ca quand la personne change de piece dans la description longue(besoin que d'afficher le nombre en vraie, pas besoin de mmessage, si 0 chien bah zero chien)
@@ -256,6 +255,8 @@ public class Jeu {
 				recu.setName(name);
 				p.addPet(recu);
 				System.out.println("Capture Reussi !, votre nouveau compagnon s'appelle "+name);
+			}else{
+				System.out.println("plus de place pour de nouveaux compagnions");
 			}
 		}else{
 			System.out.println("Il n'y a pas d'animaux ici!");
@@ -290,7 +291,7 @@ public class Jeu {
 		String name;
 		Objet retire=null;
 		//choisir ici de ramasser n'importe quel objet plutot
-		if(!p.isFull()){
+		if(!(p.isFull())){
 			
 			if(!pieceCourante.isObjHere()){
 				System.out.println("Aucun item à ramasser ici");

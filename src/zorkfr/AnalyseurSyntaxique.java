@@ -30,7 +30,7 @@ public class AnalyseurSyntaxique {
 
 	// répertorie toutes les commandes reconnues
 	private MotCleCommande commandes;
-	private String name;
+
 	//put here the annalyse for the player name and the dog name when catch
 
 	/**

@@ -2,7 +2,7 @@ package main;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
+
 
 public class Player extends Entity{
 	
@@ -118,10 +118,18 @@ public class Player extends Entity{
 
 	public boolean isFull() {//fix that, why cant get the info
 		// TODO Auto-generated method stub
-		if (number_obj<=capacity){
-			return false;
-		}else{
+		if (number_obj>=capacity){
 			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public boolean isMaxPets(){
+		if (pet_count>=maxCompagnie){
+			return true;
+		}else{
+			return false;
 		}
 	}
 
