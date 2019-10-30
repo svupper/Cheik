@@ -160,12 +160,12 @@ public class Jeu {
 	
 	public int traiterCommandeSpec(Commande c){
 		if(c!=null){
-			if (!(c.isSpecial())) {
+			if (!(c.isSpecial())) {//CA sert a rien !!!!!!!!!!!!!!!!!!!
 				System.out.println("Commande Invalide lorsque l'inventaire du compagon est ouvert");
-				return -1;
+				return 2;
 			}
 			String motCommande = c.getMotCommande();
-			System.out.println(motCommande);
+
 			if(motCommande!=null){
 				if(motCommande.equalsIgnoreCase("donner")){
 					return 0;
@@ -179,7 +179,7 @@ public class Jeu {
 				}
 			}
 		}
-		return -1;
+		return 2;
 	}
 
 
@@ -325,23 +325,27 @@ public class Jeu {
 			commande.setSpecial();
 			command=traiterCommandeSpec(commande);
 			if(command==1){
-				System.out.println("on va prendre");
-				if((!(c.isBagEmpty()))&&(!(p.isFull()))){
-					System.out.println(c.bagDesc());
-					System.out.println("Quel item prendre ?");
-					String pre = analyseurSyntaxique.getName();
-					Objet o=c.removeObj(pre);
-					if(o==null){
-						System.out.println("Aucun item possedant ce nom dans l'inventaire de "+c.getName());
-						return;
+
+				if(!(c.isBagEmpty())){
+					if(!(p.isFull())){
+						System.out.println(c.bagDesc());
+						System.out.println("Quel item prendre ?");
+						String pre = analyseurSyntaxique.getName();
+						Objet o=c.removeObj(pre);
+						if(o==null){
+							System.out.println("Aucun item possedant ce nom dans l'inventaire de "+c.getName());
+							return;
+						}
+						p.addObj(o);
+						System.out.println(o.getName()+" recuperé");
+					}else{
+						System.out.println("l'inventaire du joueur est plein");
 					}
-					p.addObj(o);
-					System.out.println(o.getName()+" recuperé");
+				}else{
+					System.out.println("Aucun Item dans l'inventaire du compagnon");
 				}
 			}else if(command==0){
-				System.out.println("on va donner");
-				System.out.println(p.isBagEmpty());
-				System.out.println(c.isFull());
+
 				if(!(p.isBagEmpty())){
 					if(!(c.isFull())){
 						System.out.println(p.bagDesc());
@@ -359,6 +363,8 @@ public class Jeu {
 			}else if(command==-1){
 				c.closeInv();
 				System.out.println("Inventaire fermé pour "+c.getName());
+			}else if(command==2){
+				System.out.println("Commande invalide quand l'inventaire du compagnon est ouvert");
 			}
 					
 		}

@@ -6,7 +6,7 @@ import java.util.Iterator;
 public abstract class Entity {
 
 	protected String name;
-	protected ArrayList<Objet> bag=new ArrayList<Objet>();;
+	protected ArrayList<Objet> bag=new ArrayList<Objet>();
 	protected int number_obj=0;
 	protected int capacity;
 	protected boolean openInv;//variable permettant de savoir si l'inventaire est ouvert ou pas
