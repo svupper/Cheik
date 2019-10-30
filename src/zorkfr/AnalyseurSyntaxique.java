@@ -131,5 +131,10 @@ public class AnalyseurSyntaxique {
 	public void afficherToutesLesCommandes() {
 		commandes.afficherToutesLesCommandes();
 	}
+	
+	public void afficherCommandesSpec() {
+		commandes.afficherCommandesSpec();
+	}
+	
 }
 

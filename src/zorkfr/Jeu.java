@@ -158,7 +158,7 @@ public class Jeu {
 		return false;
 	}
 	
-	public int traiterCommandeSpec(Commande c){
+	public double traiterCommandeSpec(Commande c){
 		if(c!=null){
 			if (!(c.isSpecial())) {//CA sert a rien !!!!!!!!!!!!!!!!!!!
 				System.out.println("Commande Invalide lorsque l'inventaire du compagon est ouvert");
@@ -308,13 +308,15 @@ public class Jeu {
 		System.out.println("Avec quel compagnon voulez vous echanger ?");
 		String name = analyseurSyntaxique.getName();
 		Iterator<Chien> iter=p.petsList().iterator();
-		int command;
+		double command;
 		Chien c=null;
 		while(iter.hasNext()){
 			c= iter.next();
 			if(c.getName().equalsIgnoreCase(name)){
 				System.out.println("Inventaire du compagnon "+c.getName()+" ouvert : ");
 				System.out.println(c.bagDesc());
+				System.out.print("Commandes disponibles pour l'echange : ");
+				analyseurSyntaxique.afficherCommandesSpec();
 				c.openInv();
 				break;
 			}
@@ -365,6 +367,8 @@ public class Jeu {
 				System.out.println("Inventaire fermé pour "+c.getName());
 			}else if(command==2){
 				System.out.println("Commande invalide quand l'inventaire du compagnon est ouvert");
+				System.out.print("Commandes disponibles pour l'echange : ");
+				analyseurSyntaxique.afficherCommandesSpec();
 			}
 					
 		}

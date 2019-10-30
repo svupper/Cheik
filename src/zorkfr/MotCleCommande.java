@@ -20,7 +20,7 @@ public class MotCleCommande {
 	 *  Un tableau constant contenant tous les mots-clé valides comme commandes.
 	 */
 	private final static String commandesValides[] = {"aller", "quitter", "aide","catch","relacher","drop","ramasser","inventaire","echanger"};
-	private final static String commandesSpec[] = {"donner","prendre","inv"};
+	private final static String commandesSpec[] = {"donner","prendre","inv","fermer"};
 
 	/**
 	 *  Initialise la liste des mots-clé utilisables comme commande.
@@ -52,6 +52,13 @@ public class MotCleCommande {
 	public void afficherToutesLesCommandes() {
 		for (int i = 0; i < commandesValides.length; i++) {
 			System.out.print(commandesValides[i] + "  ");
+		}
+		System.out.println();
+	}
+	
+	public void afficherCommandesSpec() {
+		for (int i = 0; i < commandesSpec.length; i++) {
+			System.out.print(commandesSpec[i] + "  ");
 		}
 		System.out.println();
 	}
