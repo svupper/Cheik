@@ -160,10 +160,7 @@ public class Jeu {
 	
 	public double traiterCommandeSpec(Commande c){
 		if(c!=null){
-			if (!(c.isSpecial())) {//CA sert a rien !!!!!!!!!!!!!!!!!!!
-				System.out.println("Commande Invalide lorsque l'inventaire du compagon est ouvert");
-				return 2;
-			}
+
 			String motCommande = c.getMotCommande();
 
 			if(motCommande!=null){
@@ -321,6 +318,12 @@ public class Jeu {
 				break;
 			}
 		}
+		
+		if(c==null){
+			System.out.println("Aucun compagnon possedant ce nom");
+			return ;
+		}
+		
 		while(c.invIsOpen()&&(c!=null)){
 		//utiliser ici des commandes speciale et une boucle
 			Commande commande = analyseurSyntaxique.getCommande();
@@ -330,6 +333,7 @@ public class Jeu {
 
 				if(!(c.isBagEmpty())){
 					if(!(p.isFull())){
+						
 						System.out.println(c.bagDesc());
 						System.out.println("Quel item prendre ?");
 						String pre = analyseurSyntaxique.getName();
@@ -338,8 +342,13 @@ public class Jeu {
 							System.out.println("Aucun item possedant ce nom dans l'inventaire de "+c.getName());
 							return;
 						}
-						p.addObj(o);
-						System.out.println(o.getName()+" recuperé");
+						if(p.canCarry(o)){
+							p.addObj(o);
+							System.out.println(o.getName()+" recuperé");
+						}else{
+							System.out.println("l'objet est trop lourd pour le joueur");
+							
+						}
 					}else{
 						System.out.println("l'inventaire du joueur est plein");
 					}
@@ -354,8 +363,17 @@ public class Jeu {
 						System.out.println("Quel item donné ?");
 						String pre = analyseurSyntaxique.getName();
 						Objet o=p.removeObj(pre);
-						c.addObj(o);
-						System.out.println(o.getName()+" donné à "+c.getName());
+						
+						if(o==null){
+							System.out.println("Aucun item possedant ce nom dans l'inventaire du joeur");
+							return;
+						}
+						if(c.canCarry(o)){
+							c.addObj(o);
+							System.out.println(o.getName()+" donné à "+c.getName());
+						}else{
+							System.out.println("L'objet est trop lourd pour ce compagnon !");
+						}
 					}else{
 						System.out.println("Le compagnon ne peut plus porter d'objet supplementaire");
 					}

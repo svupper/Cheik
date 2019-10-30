@@ -12,8 +12,8 @@ public abstract class Entity {
 	protected boolean openInv;//variable permettant de savoir si l'inventaire est ouvert ou pas
 	
 	protected int power;
-	protected int hp=100;
-	protected boolean alive;
+	private int max=11;
+	private int min=7;
 		
 	public Entity(){
 
@@ -22,15 +22,9 @@ public abstract class Entity {
 	public Entity(String name,int c){
 		this.name=name;
 		this.capacity=c;
+		this.power=(int)(Math.random()*((max-min)+1))+min;
 	}
-	/*
-	public Entity(String name,int hp){
-		this.name=name;
-		this.alive=true;
-		this.hp=hp;
-		
-	}
-	*/
+
 	public String getName(){
 		return name;
 	}
@@ -52,13 +46,12 @@ public abstract class Entity {
 		openInv=false;
 	}
 	
-	public void takeDamage(int dmg){
-		hp=hp-dmg;
-	}
 	
-	public void die(){
-		if (hp<=0){
-			alive=false;
+	public boolean canCarry(Objet o){
+		if(power>=o.getWeight()){
+			return true;
+		}else{
+			return false;
 		}
 	}
 	
