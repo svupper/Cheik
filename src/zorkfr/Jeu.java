@@ -31,6 +31,7 @@ public class Jeu {
 
 	private Piece pieceCourante;
 	private Player p;
+	private int goal=5;
 
 
 
@@ -49,30 +50,56 @@ public class Jeu {
 	 *  Crée toutes les pieces et relie leurs sorties les unes aux autres.
 	 */
 	public void creerPieces() {
+		/*
 		Piece dehors;
 		Piece salleTD;
 		Piece taverne;
 		Piece batimentC;
 		Piece burreau;
+		*/
+		Piece room1=new Piece("la piece 1");
+		Piece room2=new Piece("la piece 2");;
+		Piece room3=new Piece("la piece 3");;
+		Piece room4=new Piece("la piece 4");;
+		Piece room5=new Piece("la piece 5");;
+		Piece room6=new Piece("la piece 6");;
+		Piece room7=new Piece("la piece 7");;
+		Piece room8=new Piece("la piece 8");;
+		Piece room9=new Piece("la piece 9");;
 
+
+		/*
 		// création des pieces
 		dehors = new Piece("devant le batiment C");
 		salleTD = new Piece("une salle de TD dans le batiment G");
 		taverne = new Piece("la taverne");
 		batimentC = new Piece("le batiment C");
 		burreau = new Piece("le secrétariat");
-
+		*/
+		
+		/*
 		// initialise les sorties des pieces
 		dehors.setSorties(null, salleTD, batimentC, taverne);
 		salleTD.setSorties(null, null, null, dehors);
 		taverne.setSorties(null, dehors, null, null);
 		batimentC.setSorties(dehors, burreau, null, null);
 		burreau.setSorties(null, null, null, batimentC);
+		*/
+		
+		room1.setSorties(null, room2, null, null);
+		room2.setSorties(room3, room7, room8, room1);
+		room3.setSorties(null,room4, room2, null);
+		room4.setSorties(room5, room6, null, room3);
+		room5.setSorties(null, null, room4, null);
+		room6.setSorties(null, null, null, room4);
+		room7.setSorties(null, null, null, room2);
+		room8.setSorties(room2, room9, null, null);
+		room9.setSorties(null, null, null, room8);
 
 		
 		// le jeu commence dehors
-		pieceCourante = dehors;
-
+		//pieceCourante = dehors;
+		pieceCourante = room1;
 		
 	}
 
@@ -97,8 +124,12 @@ public class Jeu {
 			if(p.isFull()&&(p.isMaxPets())){
 				termine=true;
 			}
+			
+			if(p.getPickCount()>=goal){
+				termine=true;
+			}
 		}
-		System.out.println("Vous avez ramasser suffisament d'objet et de chien pour sortir");
+		System.out.println("Vous avez ramasser suffisament d'objet pour sortir");
 		System.out.println("Merci d'avoir jouer.  Au revoir.");
 	}
 

@@ -29,6 +29,10 @@ public class Player extends Entity{
 		
 	}
 	
+	public int getPetCount(){
+		return pet_count;
+	}
+	
 	public void addPet(Chien p){
 		if(pet_count<maxCompagnie){
 			this.pets.add(p);

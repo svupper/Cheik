@@ -10,7 +10,7 @@ public abstract class Entity {
 	protected int number_obj=0;
 	protected int capacity;
 	protected boolean openInv;//variable permettant de savoir si l'inventaire est ouvert ou pas
-	
+	protected int pickCount=0;
 	protected int power;
 	private int max=11;
 	private int min=7;
@@ -32,6 +32,14 @@ public abstract class Entity {
 	public void setName(String n){
 		this.name=n;
 	
+	}
+	
+	public int getPickCount(){
+		return pickCount;
+	}
+	
+	public int getItemCount(){
+		return number_obj;
 	}
 	
 	public boolean invIsOpen(){
@@ -59,6 +67,7 @@ public abstract class Entity {
 		if(number_obj<capacity){
 			this.bag.add(o);
 			number_obj++;
+			pickCount++;
 			return true;
 		}else{
 			return false;
